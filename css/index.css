@@ -1,0 +1,177 @@
+@charset "UTF-8";
+
+/*引入字体图片库*/
+@import './font/iconfont.css';
+
+/*公共样式start*/
+input,label,span,i{
+	vertical-align: middle;
+}
+input[type="checkbox"]{
+	margin-right: 5px;
+	width: 16px;
+    height: 16px;
+}
+.cs-box{
+	overflow: hidden;
+	position: absolute;
+    left: 50%;
+    top: 50%;transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+	width: 705px;
+    border: 1px solid #D8DCF0;
+}
+.cs-bd{
+	overflow-y: auto;
+	padding-left: 8px;
+	height: 275px;
+}
+.cs-item {
+	overflow: hidden;
+	height: 28px;
+    line-height: 28px;
+    font-size: 12px;
+}
+.cs-item i{
+	padding: 0 3px; 
+}
+.cs-ft{
+	padding-left: 13px;
+	height: 31px;
+	line-height: 31px;
+	background-color: #F7F8FC;
+}
+/*公共样式end*/
+
+/*收信人*/
+.cs-toselected{
+	float: left;
+	position: relative;
+
+	width: 352px;
+	height: 360px;
+	font-size: 12px;
+	background-color: #FFF;
+	border-right: 1px solid #D8DCF0;
+}
+.cs-arrow{
+	display: block;
+	position: absolute;
+	top: 50%;
+	left: 351px;
+	margin-top: -29px;
+
+	width: 9px;
+	height: 58px;
+	background-image: url('../images/arrow.png');
+}
+/*搜索块*/
+.cs-hd{
+	margin: 8px; 
+	width: 336px;
+	height: 28px;
+	line-height: 28px;
+	background-color: #F7F8FC;
+}
+.cs-hd label{
+	color: #444444;
+	font-weight: bold;
+}
+.cs-toselected ul{
+	height: 286px;
+}
+.icon-sousuo{
+	padding-left: 1px;
+	vertical-align: middle;
+	font-size: 20px;
+}
+.cs-hd input{
+	padding-left: 5px;
+	font-size: 12px;
+	background-color: #F7F8FC;
+	border: 0;
+	outline: none;
+}
+/*列表块*/
+.cs-toselected__item{
+	padding-left: 5px;
+}
+.cs-toselected__item label{
+	display: block;
+	overflow: hidden;
+    width: 292px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.cs-toselected__chks{
+	float: left;
+}
+.cs-toselected__chks input{
+	margin-right: 8px;
+}
+/*分页*/
+.cs-toselected__pagination{
+	float: right;
+	margin-right: 20px;
+}
+.cs-toselected__pagination input{
+	margin: 0 3px; 
+	width: 25px;
+    text-align: center;
+    border-radius: 2px;
+    border: 1px solid #D8DCF0;
+}
+.cs-toselected__pagination .iconfont{
+	cursor: pointer;
+}
+.nodata{
+	color: #999;
+}
+
+/*已选收信人*/
+.cs-selected{
+	float: left;
+
+	width: 351px;
+	height: 360px;
+	background-color: #F7F8FC;
+	border-left: 0;
+}
+.cs-selected ul{
+	height: 310px;
+}
+.cs-selected strong{
+	margin-bottom: 2px;
+    font-size: 14px;
+    font-family: "微软雅黑";
+}
+.cs-selected__item{
+	padding: 0 8px;
+	width: 318px;
+	text-align: center;
+}
+.cs-selected__item:hover{
+	background-color: #EAF2FB;
+}
+.cs-selected__item .cs-name{
+	float: left;
+	overflow: hidden;
+    width: 120px;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.cs-selected__item .cs-school{
+	float: left;
+	overflow: hidden;
+	margin-left: 20px;
+    width: 120px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.cs-selected__item .cs-delete{
+	display: none;
+	float: right;
+	color: #2196F3;
+	cursor: pointer;
+}

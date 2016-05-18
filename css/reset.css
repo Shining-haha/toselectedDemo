@@ -1,0 +1,84 @@
+@charset "UTF-8";
+/*基础CSS定义*/
+/*
+ * @description: reset
+ * @author: qianwenyu (15/11/28)
+ * @update:
+ */
+/* 清除内外边距 */
+body, h1, h2, h3, h4, h5, h6, hr, p, blockquote,
+dl, dt, dd, ul, ol, li,
+pre,
+fieldset, button, input, textarea,
+th, td {
+  /* table elements 表格元素 */
+  margin: 0;
+  padding: 0; }
+
+div, span, i, em, strong, input, textarea, ul, li, ol, button, a, th, td {
+  -moz-box-sizing: border-box;
+       box-sizing: border-box; }
+
+/* 设置默认字体 */
+body,
+button, input, select, textarea {
+  font: 14px/1.5 "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", SimSun;
+  color: #333; }
+
+i, em, strong {
+  font-style: normal;
+  font-weight: normal; }
+
+code, kbd, pre, samp, tt {
+  font-family: "Courier New", Courier, monospace; }
+
+/* 统一等宽字体 */
+small {
+  font-size: 12px; }
+
+/* 小于 12px 的中文很难阅读，让 small 正常化 */
+/* 重置列表元素 */
+ul, ol {
+  list-style: none; }
+
+/* 重置文本格式元素 */
+a {
+  color: #3C8CF0;
+  text-decoration: none; }
+
+/* 重置表单元素 */
+fieldset, img {
+  border: none; }
+
+/* img 搭车：让链接里的 img 无边框 */
+/* 注：optgroup 无法扶正 */
+button, input, select, textarea {
+  font-size: 100%;
+  /* 使得表单元素在 ie 下能继承字体大小 */ }
+
+/* 重置表格元素 */
+table, td {
+  border-collapse: collapse;
+  border-spacing: 0; }
+  table th, td th {
+    font-weight: normal; }
+
+/* 重置 hr */
+hr {
+  border: none;
+  height: 1px; }
+
+body {
+  background-color: #fff; }
+
+/*选中文本色
+::selection {
+  color: #fff;
+  background-color: $primary5;
+}*/
+.clear:before, .clear:after {
+  display: table;
+  content: " "; }
+
+.clear:after {
+  clear: both; }
