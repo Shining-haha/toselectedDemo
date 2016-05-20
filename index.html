@@ -8,128 +8,33 @@
 <link href="./css/reset.css" rel="stylesheet">
 <link href="./css/index.css" rel="stylesheet">
 <script type="text/javascript" src="./js/jquery.min.js"></script>
+<script type="text/javascript" src="./js/toselected.js"></script>
 </head>
 <body>
-    <div class="cs-box">
-        <div class="cs-toselected">
-            <div class="cs-hd">
-                <i class="iconfont icon-sousuo"></i>
-                <input type="text" placeholder="搜索姓名"/>
-            </div>
-            <ul class="cs-bd">
-                <li class="cs-item cs-toselected__item" pid="1" pschool="艺术">
-                    <label>
-                        <input type="checkbox"/>
-                        <span>张三</span><i>(</i><span>14602368</span><i>)</i>
-                    </label>
-                </li>
-                <li class="cs-item cs-toselected__item" pid="2" pschool="体育">
-                    <label>
-                        <input type="checkbox"/>
-                        <span>李四</span><i>(</i><span>14602368</span><i>)</i>
-                    </label>
-                </li>
-                <li class="cs-item cs-toselected__item" pid="3" pschool="影视">
-                    <label>
-                        <input type="checkbox"/>
-                        <span>王五</span><i>(</i><span>14602368</span><i>)</i>
-                    </label>
-                </li>
-                <li class="cs-item cs-toselected__item" pid="4" pschool="播音">
-                    <label>
-                        <input type="checkbox"/>
-                        <span>赵六</span><i>(</i><span>14602368</span><i>)</i>
-                    </label>
-                </li>
-            </ul>
-            <div class="cs-ft">
-                <div class="cs-toselected__chks">
-                    <label><input type="checkbox" class="cs-chkall"/><span>全选</span></label>
-                </div>
-                <div class="cs-toselected__pagination">
-                    <i class="iconfont icon-navigatebefore nodata"></i>
-                    <input type="text" value='1'/>
-                    <span>/&nbsp;&nbsp;2</span>
-                    <i class="iconfont icon-navigatenext"></i>
-                </div>
-            </div>
-            <span class="cs-arrow"></span>
-        </div>
-        <div class="cs-selected">
-            <div class="cs-hd">
-                <label>已选收信人</label>
-            </div>
-            <ul class="cs-bd">
-                <li class="cs-item cs-selected__item" pid="10">
-                    <label class="cs-name">哈哈<i>(</i>14602368<i>)</i></label>
-                    <label class="cs-school">艺术</label>
-                    <label class="cs-delete" style="display: none;">删除</label>
-                </li>
-            </ul>
-        </div>
-    </div>
-    
-
+<div class="selectbox"></div>
 <script type="text/javascript">
-    //全选
-    $(".cs-chkall").on('click', function(){
-        if($(this).is(":checked")){
-            $(".cs-toselected__item input[type='checkbox']").each(function(){
-                var $pid = $(this).parents("li").attr("pid"); //当前pid
-                $(".cs-selected__item[pid="+$pid+"]").length === 0 && appendhtml($(this)); //不存在则添加
+    var toselected = [{'id':'1','name':'张三','sno':'1563230','college':'教育学院'},
+                      {'id':'2','name':'李四','sno':'1563230','college':'艺术学院'},
+                      {'id':'3','name':'王五','sno':'1563230','college':'教育学院'},
+                      {'id':'4','name':'赵六子','sno':'1563230','college':'艺术学院'}],
+
+        selected = [{'id':'2','name':'李四','sno':'1563230','college':'教育学院'},
+                    {'id':'6','name':'石头','sno':'1563230','college':'教育学院'}];
+
+    $(".selectbox").toselected({
+        'pagination':{
+            total: 6,
+            pageno: 0,
+            pagesize: 5,
+        },
+        'toselected': toselected,
+        'selected': selected,
+        topage: function(pageno){
+            this.data({
+                
             });
-            //checkbox全部选中
-            $(".cs-toselected__item").find("input[type='checkbox']").prop("checked", true);
-        }else{
-            $(".cs-toselected__item input[type='checkbox']").each(function(){
-                var $pid = $(this).parents("li").attr("pid"); //当前pid 
-                $(".cs-selected__item[pid="+$pid+"]").length === 1 && removehtml($(this)); //存在则移除
-            });
-            //checkbox全部取消选中
-            $(".cs-toselected__item").find("input[type='checkbox']").prop("checked", false);
-        }
+        },
     });
-    //单选
-    $(".cs-toselected__item input[type='checkbox']").on('click', function(){
-        $(this).is(":checked") ? appendhtml($(this)) : removehtml($(this)) ;
-        chkAll();
-    });
-    $(".cs-selected ul").on('mouseover', 'li', function(){
-        $(".cs-delete",this).show();
-    });
-    $(".cs-selected ul").on('mouseout', 'li', function(){
-        $(".cs-delete",this).hide();
-    });
-    $(".cs-selected ul").on('click', '.cs-delete', function(){
-        removehtml($(this));
-        chkAll();
-    });
-    //添加条目
-    function appendhtml(elm){
-        var $this = elm.parent(),
-            html = '<li class="cs-item cs-selected__item" pid="'+$this.parent().attr("pid")+'">'+
-                        '<label class="cs-name">'+$("span",$this).eq(0).text()+'<i>(</i>'+$("span",$this).eq(1).text()+'<i>)</i></label>'+
-                        '<label class="cs-school">'+$this.parent().attr("pschool")+'</label>'+
-                        '<label class="cs-delete">删除</label>'+
-                    '</li>';
-        $(".cs-selected .cs-bd").append(html); //将条目自动添加到右侧(已选收信人)中
-    }
-    //删除条目
-    function removehtml(elm){
-        var $pid = elm.parents("li").attr("pid");
-        $(".cs-selected__item[pid="+$pid+"]").remove(); //移除删除的条目
-        $(".cs-toselected__item[pid="+$pid+"]").find("input").prop("checked", false); //取消checkbox选中
-    }
-    //是否全选
-    function chkAll(){
-        var $chklen = $(".cs-toselected__item input[type='checkbox']:checked");  //选中个数
-        var $len = $(".cs-toselected__item input[type='checkbox']");  //总个数
-        if($chklen.length === $len.length){
-            $(".cs-chkall").prop("checked", true);
-        }else{
-            $(".cs-chkall").prop("checked", false);
-        }
-    }
 </script>
 </body>
 </html>
