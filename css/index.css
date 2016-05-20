@@ -106,6 +106,7 @@ input[type="checkbox"]{
 }
 .cs-toselected__chks{
 	float: left;
+	display: none;
 }
 .cs-toselected__chks input{
 	margin-right: 8px;
