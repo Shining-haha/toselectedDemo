@@ -13,13 +13,19 @@
 <body>
 <div class="selectbox"></div>
 <script type="text/javascript">
-    var toselected = [{'id':'1','name':'张三','sno':'1563230','college':'教育学院'},
+$(document).ready(function(){
+  var toselected = [{'id':'1','name':'张三','sno':'1563230','college':'教育学院'},
                       {'id':'2','name':'李四','sno':'1563230','college':'艺术学院'},
                       {'id':'3','name':'王五','sno':'1563230','college':'教育学院'},
                       {'id':'4','name':'赵六子','sno':'1563230','college':'艺术学院'}],
 
         selected = [{'id':'2','name':'李四','sno':'1563230','college':'教育学院'},
-                    {'id':'6','name':'石头','sno':'1563230','college':'教育学院'}];
+                    {'id':'6','name':'石头','sno':'1563230','college':'教育学院'}],
+
+        ts1 = [{'id':'5','name':'小屋','sno':'1563230','college':'教育学院'},
+               {'id':'6','name':'石头','sno':'1563230','college':'艺术学院'},
+               {'id':'7','name':'伯格','sno':'1563230','college':'教育学院'},
+               {'id':'8','name':'稀释','sno':'1563230','college':'艺术学院'}];
 
     $(".selectbox").toselected({
         'pagination':{
@@ -30,11 +36,14 @@
         'toselected': toselected,
         'selected': selected,
         topage: function(pageno){
-            this.data({
-                
-            });
+          this.data({'toselected': ts1});
         },
+        onSearch: function(content){
+          console.log(content);
+        }
     });
+    console.log($(".selectbox").toselected("getData"));/*打印结果*/
+});
 </script>
 </body>
 </html>
