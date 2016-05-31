@@ -31,15 +31,23 @@ $(document).ready(function(){
         'pagination':{
             total: 6,
             pageno: 0,
-            pagesize: 5,
+            pagesize: 5
         },
         'toselected': toselected,
         'selected': selected,
         topage: function(pageno){
+          console.log(pageno);
           this.data({'toselected': ts1});
         },
         onSearch: function(content){
           console.log(content);
+          this.data({'pagination':{
+                          total: 20,
+                          pageno: 0,
+                          pagesize: 5,
+                      },
+                      'toselected': ts1
+                    });
         }
     });
     console.log($(".selectbox").toselected("getData"));/*打印结果*/
