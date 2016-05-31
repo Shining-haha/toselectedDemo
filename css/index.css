@@ -32,9 +32,6 @@ input[type="checkbox"]{
     line-height: 28px;
     font-size: 12px;
 }
-.cs-item i{
-	padding: 0 3px; 
-}
 .cs-ft{
 	padding-left: 13px;
 	height: 31px;
@@ -85,6 +82,7 @@ input[type="checkbox"]{
 	padding-left: 1px;
 	vertical-align: middle;
 	font-size: 20px;
+	cursor: pointer;
 }
 .cs-hd input{
 	padding-left: 5px;
@@ -122,11 +120,12 @@ input[type="checkbox"]{
     text-align: center;
     border-radius: 2px;
     border: 1px solid #D8DCF0;
+    vertical-align: baseline;
 }
 .cs-toselected__pagination .iconfont{
 	cursor: pointer;
 }
-.nodata{
+.cs-toselected__pagination .disabled{
 	color: #999;
 }
 
@@ -172,8 +171,11 @@ input[type="checkbox"]{
     white-space: nowrap;
 }
 .cs-selected__item .cs-delete{
-	display: none;
+	visibility: hidden;
 	float: right;
 	color: #2196F3;
 	cursor: pointer;
+}
+.cs-selected__item:hover .cs-delete{
+	visibility: initial;
 }
