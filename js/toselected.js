@@ -5,21 +5,16 @@
     var ToSelected = function(element,options){
         this.$element = $(element);
         this.options = $.extend({},ToSelected.DEFAULTS,options);
-        this.$pageno = Math.ceil(this.options.pagination.pageno);
-        this.$pages =  Math.ceil(this.options.pagination.total / this.options.pagination.pagesize);
-        this.$isSearch = false;
+        this.pageno = 0;
+        this.pages = 0;
         this.init();
     };
 
     /*导航菜单默认属性*/
     ToSelected.DEFAULTS = {
-        pagination:{
-            total: 0,
-            pageno: 0,
-            pagesize: 10,
-        },
+        pagination: null,
         toselected: null,
-        selected: null,
+        selected: null
     };
 
     /*导航菜单初始化*/
@@ -63,7 +58,7 @@
     };
     /*左侧(收信人)数据初始化*/
     ToSelected.prototype.data = function(options) {
-        var $toselected = options.toselected
+        var $toselected = options.toselected,
             html = '';
         for (var i = 0, len = $toselected.length; i < len; i += 1) {
             html += '<li class="cs-item cs-toselected__item" pid="' +$toselected[i].id+ '" pcollege="' +$toselected[i].college+ '">'+
@@ -78,7 +73,7 @@
         this.$element.find(".cs-toselected ul").html(html);
 
         $toselected.length > 0 && this.$element.find(".cs-toselected__chks").show();//左侧(收信人)不为空,显示全选按钮
-        this.$isSearch && this.pagination(); //设置分页
+        options.pagination && this.pagination(options.pagination); //设置分页
     };
     /*右侧(已选收信人)数据初始化*/
     ToSelected.prototype.sdata = function($selected) {
@@ -91,16 +86,19 @@
                      '</li>';
         };
         this.$element.find(".cs-selected ul").html(html);
-        this.pagination(); //设置分页
+        this.pagination(this.options.pagination); //设置分页
     }
     /*分页初始化*/
-    ToSelected.prototype.pagination = function() {
+    ToSelected.prototype.pagination = function(pagination) {
+        this.pageno = Math.ceil(pagination.pageno);
+        this.pages =  Math.ceil(pagination.total / pagination.pagesize);
+        this.$element.find('.cs-toselected__pagination').remove();
         //设置分页显示
-        if(this.$pageno + 1 < this.$pages){
+        if(this.pageno + 1 < this.pages){
             var pagehtml = '<div class="cs-toselected__pagination">'+
                                 '<i class="iconfont icon-navigatebefore disabled"></i>'+
-                                '<input type="text" value="' +(this.$pageno + 1)+ '"/>'+
-                                '<span>/&nbsp;&nbsp;' +this.$pages+ '</span>'+
+                                '<input type="text" value="' +(this.pageno + 1)+ '"/>'+
+                                '<span>/&nbsp;&nbsp;' +this.pages+ '</span>'+
                                 '<i class="iconfont icon-navigatenext"></i>'+
                             '</div>';
             this.$element.find(".cs-ft").append(pagehtml);
@@ -133,15 +131,15 @@
             onSearch($(this).next());
         });
         //文本框回车
-        this.$element.on('keydown','.cs-search',function(event){
-            if (event.keyCode == "13") {//keyCode=13是回车键
+        this.$element.on('keyup','.cs-search',function(event){
+            onSearch($(this));
+            /*if (event.keyCode == "13") {//keyCode=13是回车键
                 onSearch($(this));
-             }
+             }*/
         });
         function onSearch(obj){
             if($.trim($(obj).val()) !== ''){
                 self.options.onSearch.call(self, $(obj).val());
-                self.$isSearch = true;
             }
         }
         //全选
@@ -165,24 +163,24 @@
         /*分页 下一页*/
         this.$element.on('click', '.icon-navigatenext', function(){
             if($(this).hasClass("disabled")) return; //最后页不可点
-            self.$pageno = self.$pageno + 1;  //更新当前页
-            self.$element.find(".cs-toselected__pagination input").val(self.$pageno + 1); //给文本框赋值
+            self.pageno = self.pageno + 1;  //更新当前页
+            self.$element.find(".cs-toselected__pagination input").val(self.pageno + 1); //给文本框赋值
             
             //删除上一页的上不可点效果
             self.$element.find(".cs-toselected__pagination .icon-navigatebefore").removeClass("disabled");  
-            if(self.$pageno + 1 === self.$pages) $(this).addClass("disabled");  //给最后一页加上不可点效果
-            self.options.topage.call(self, self.$pageno);
+            if(self.pageno + 1 === self.pages) $(this).addClass("disabled");  //给最后一页加上不可点效果
+            self.options.topage.call(self, self.pageno);
         });
         /*分页 上一页*/
         this.$element.on('click', '.icon-navigatebefore', function(){
             if($(this).hasClass("disabled")) return; //第一页不可点
-            self.$pageno = self.$pageno - 1;  //更新当前页
-            self.$element.find(".cs-toselected__pagination input").val(self.$pageno + 1); //给文本框赋值
+            self.pageno = self.pageno - 1;  //更新当前页
+            self.$element.find(".cs-toselected__pagination input").val(self.pageno + 1); //给文本框赋值
 
             //删除下一页的上不可点效果
             self.$element.find(".cs-toselected__pagination .icon-navigatenext").removeClass("disabled");  
-            if(self.$pageno === 0) $(this).addClass("disabled");  //给上一页加上不可点效果
-            self.options.topage.call(self, self.$pageno);
+            if(self.pageno === 0) $(this).addClass("disabled");  //给上一页加上不可点效果
+            self.options.topage.call(self, self.pageno);
         });
         //添加条目
         function appendhtml(elm){
